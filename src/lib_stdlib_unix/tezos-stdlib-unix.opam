@@ -18,6 +18,7 @@ depends: [
   "mtime" { >= "1.0.0" }
   "conf-libev"
   "ipaddr" { >= "4.0.0" }
+  "re"
 ]
 build: [
   ["dune" "build" "-p" name "-j" jobs]
