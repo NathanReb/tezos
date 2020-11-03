@@ -1,3 +1,38 @@
+# Reproducing the library conflict bug
+
+Running the following from this branch should give you a build failure
+when building tezos-base due to a conflict between locally vendored and
+opam installed libraries:
+```
+git clone git@github.com:NathanReb/tezos.git
+git checkout branch-v8.0-rc1
+opam switch create ./ 4.09.0 --no-install
+eval $(opam env)
+opam repo add pirbo-vendored_dir https://github.com/pirbo/opam-repository.git#tezos-base-8
+scripts/opam-pin.sh
+opam install tezos-crypto
+dune build -p tezos-base
+```
+
+which should result in:
+```
+Error: Conflict between the following libraries:
+- "uecc" in _build/default/vendors/ocaml-uecc/src
+- "uecc" in .../_opam/lib/uecc
+  -> required by library "tezos-crypto" in
+     .../_opam/lib/tezos-crypto
+```
+
+The conflict arises even though `tezos-base` doesn't depend on `uecc`, not even implicitly through
+tezos-crypto.
+
+Setting `(implicit_transitive_deps false)` for tezos-base results in the conflict going away:
+```
+git checkout implicit-transitive-deps-false
+dune build -p tezos-base
+```
+
+
 # Tezos
 
 ## Introduction
