@@ -12,6 +12,11 @@
             tezos-base
             tezos-stdlib
             tezos-stdlib-unix
+            ptime
+            lwt
+            lwt.unix
+            ipaddr
+            result
             tezos-error-monad))
 
 (alias

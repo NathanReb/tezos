@@ -23,6 +23,8 @@
             ptime
             ezjsonm
             lwt
+            hex
+            result
             ipaddr))
 
 (alias
